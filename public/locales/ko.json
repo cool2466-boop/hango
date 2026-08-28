@@ -32,5 +32,10 @@
   "share_copy": "링크 복사",
   "share_copied": "복사됨!",
   "share_text": "나는 TOPIK 2급에 얼마나 가까울까? 무료 진단 테스트 해보기:",
-  "retry_button": "다른 세트 풀어보기"
+  "retry_button": "다른 세트 풀어보기",
+  "intro_about": "hango는 한 명의 개발자가 만드는 초기 서비스입니다. 진단 이후의 한국어 학습을 돕는 도구를 준비하고 있어요.",
+  "lead_subnote": "hango가 준비 중인 학습 자료 소식도 함께 받아요.",
+  "nav_about": "hango 소개",
+  "nav_privacy": "개인정보처리방침",
+  "nav_contact": "문의"
 }

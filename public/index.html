@@ -38,6 +38,10 @@
         <li data-i18n="intro_point_3">회원가입 없이 바로 시작.</li>
       </ul>
       <button class="btn btn-primary" id="startBtn" data-i18n="start_button">진단 시작하기</button>
+      <p class="intro-about">
+        <span data-i18n="intro_about">hango는 한 명의 개발자가 만드는 초기 서비스입니다. 진단 이후의 한국어 학습을 돕는 도구를 준비하고 있어요.</span>
+        <a href="/about" data-i18n="nav_about">hango 소개</a>
+      </p>
     </section>
 
     <!-- 문항 -->
@@ -74,9 +78,13 @@
             <input type="text" id="contactValue" autocomplete="off" />
           </div>
         </div>
+        <p class="lead-subnote" data-i18n="lead_subnote">hango가 준비 중인 학습 자료 소식도 함께 받아요.</p>
         <label class="consent">
           <input type="checkbox" id="consentChk" />
-          <span data-i18n="lead_consent">학습 정보 수신에 동의합니다. 언제든 수신 거부할 수 있습니다.</span>
+          <span>
+            <span data-i18n="lead_consent">학습 정보 수신에 동의합니다. 언제든 수신 거부할 수 있습니다.</span>
+            <a href="/privacy" data-i18n="nav_privacy">개인정보처리방침</a>
+          </span>
         </label>
         <button class="btn btn-primary" id="leadBtn" data-i18n="lead_submit_button">결과지 받기</button>
         <p class="lead-thanks" id="leadThanks" hidden data-i18n="lead_thanks">감사합니다! 곧 보내드릴게요.</p>
@@ -96,7 +104,9 @@
   </main>
 
   <footer class="foot">
-    <span>hango.kr</span>
+    <a href="/about" data-i18n="nav_about">hango 소개</a>
+    <a href="/privacy" data-i18n="nav_privacy">개인정보처리방침</a>
+    <a href="mailto:cool2466@gmail.com" data-i18n="nav_contact">문의</a>
   </footer>
 
   <script src="/js/i18n.js"></script>

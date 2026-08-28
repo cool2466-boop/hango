@@ -32,5 +32,10 @@
   "share_copy": "Salin tautan",
   "share_copied": "Tersalin!",
   "share_text": "Seberapa dekat saya dengan TOPIK Level 2? Coba tes gratis ini:",
-  "retry_button": "Coba set lain"
+  "retry_button": "Coba set lain",
+  "intro_about": "hango adalah layanan tahap awal yang dibuat oleh satu pengembang. Kami sedang membangun alat untuk membantu Anda belajar bahasa Korea setelah tes.",
+  "lead_subnote": "Anda juga akan diberi tahu saat materi belajar hango siap.",
+  "nav_about": "Tentang hango",
+  "nav_privacy": "Privasi",
+  "nav_contact": "Kontak"
 }

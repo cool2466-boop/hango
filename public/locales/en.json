@@ -32,5 +32,10 @@
   "share_copy": "Copy link",
   "share_copied": "Copied!",
   "share_text": "How close am I to TOPIK Level 2? Try this free test:",
-  "retry_button": "Try another set"
+  "retry_button": "Try another set",
+  "intro_about": "hango is an early-stage service built by one developer. We're building tools to help you study Korean after the test.",
+  "lead_subnote": "You'll also hear when hango's study materials are ready.",
+  "nav_about": "About hango",
+  "nav_privacy": "Privacy",
+  "nav_contact": "Contact"
 }

@@ -130,4 +130,23 @@ h3 { font-size: 1.1rem; margin: 0 0 10px; }
 .share-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 .share-btns .btn { flex: 1; min-width: 96px; }
 
-.foot { text-align: center; color: var(--text-soft); font-size: .85rem; padding: 24px 0 40px; }
+.intro-about { margin-top: 22px; font-size: .88rem; color: var(--text-soft); line-height: 1.7; }
+.intro-about a { color: var(--accent); font-weight: 600; white-space: nowrap; }
+.lead-subnote { font-size: .88rem; color: var(--text-soft); margin: 0 0 10px; }
+.consent a { color: var(--accent); }
+
+.foot { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; color: var(--text-soft); font-size: .85rem; padding: 24px 18px 44px; }
+.foot a { color: var(--text-soft); text-decoration: none; }
+.foot a:hover { color: var(--accent); text-decoration: underline; }
+
+/* about / privacy 정적 페이지 */
+.doc { max-width: var(--maxw); margin: 0 auto; padding: 8px 18px 64px; }
+.doc h1 { font-size: 1.6rem; margin: 18px 0 6px; }
+.doc h2 { font-size: 1.15rem; margin: 28px 0 8px; }
+.doc h3 { font-size: 1rem; margin: 18px 0 6px; color: var(--text-soft); text-transform: uppercase; letter-spacing: .04em; }
+.doc p, .doc li { color: var(--text); }
+.doc .muted { color: var(--text-soft); }
+.doc ul { padding-left: 20px; display: grid; gap: 6px; }
+.doc .lang-block { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 28px; }
+.doc .back { display: inline-block; margin-top: 8px; color: var(--accent); font-weight: 600; text-decoration: none; }
+.doc time { color: var(--text-soft); font-size: .85rem; }

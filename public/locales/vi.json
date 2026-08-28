@@ -32,5 +32,10 @@
   "share_copy": "Sao chép liên kết",
   "share_copied": "Đã sao chép!",
   "share_text": "Tôi cách TOPIK cấp 2 bao xa? Thử bài kiểm tra miễn phí này:",
-  "retry_button": "Thử bộ đề khác"
+  "retry_button": "Thử bộ đề khác",
+  "intro_about": "hango là dịch vụ giai đoạn đầu do một lập trình viên xây dựng. Chúng tôi đang phát triển công cụ giúp bạn học tiếng Hàn sau bài test.",
+  "lead_subnote": "Bạn cũng sẽ được báo khi tài liệu học của hango sẵn sàng.",
+  "nav_about": "Giới thiệu hango",
+  "nav_privacy": "Bảo mật",
+  "nav_contact": "Liên hệ"
 }
