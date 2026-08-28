@@ -9,7 +9,10 @@
   <meta property="og:title" content="무료 TOPIK 2급 진단 테스트 · hango" />
   <meta property="og:description" content="5분이면 끝. 내 한국어가 TOPIK 2급에 얼마나 가까운지 지금 확인하세요." />
   <meta property="og:type" content="website" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <meta property="og:url" content="https://hango.kr/" />
+  <meta property="og:image" content="https://hango.kr/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://hango.kr/og.png" />
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
@@ -93,11 +96,13 @@
 
       <div class="share-box">
         <p data-i18n="share_prompt">친구에게 도전장을 보내세요</p>
+        <button class="btn btn-primary btn-block" id="shareImageBtn" data-i18n="share_image">결과 이미지 공유</button>
         <div class="share-btns">
           <button class="btn btn-ghost" data-share="kakao" data-i18n="share_kakao">카카오톡</button>
           <button class="btn btn-ghost" data-share="facebook" data-i18n="share_facebook">페이스북</button>
           <button class="btn btn-ghost" data-share="copy" data-i18n="share_copy">링크 복사</button>
         </div>
+        <canvas id="shareCanvas" width="1080" height="1080" hidden aria-hidden="true"></canvas>
       </div>
 
       <button class="btn btn-ghost btn-block" id="retryBtn" data-i18n="retry_button">다른 세트 풀어보기</button>

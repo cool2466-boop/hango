@@ -38,5 +38,9 @@
   "nav_guide": "Panduan tes & visa Korea",
   "nav_about": "Tentang hango",
   "nav_privacy": "Privasi",
-  "nav_contact": "Kontak"
+  "nav_contact": "Kontak",
+  "share_image": "Bagikan gambar hasil",
+  "card_score_label": "Perkiraan skor",
+  "card_footer": "Tes gratis 5 menit · hango.kr",
+  "submit_error": "Gagal mengirim. Silakan coba lagi sebentar lagi."
 }

@@ -38,5 +38,9 @@
   "nav_guide": "Korean test & visa guide",
   "nav_about": "About hango",
   "nav_privacy": "Privacy",
-  "nav_contact": "Contact"
+  "nav_contact": "Contact",
+  "share_image": "Share result image",
+  "card_score_label": "Projected score",
+  "card_footer": "Free 5-min test · hango.kr",
+  "submit_error": "Couldn't submit. Please try again in a moment."
 }

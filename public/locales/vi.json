@@ -38,5 +38,9 @@
   "nav_guide": "Hướng dẫn thi & visa tiếng Hàn",
   "nav_about": "Giới thiệu hango",
   "nav_privacy": "Bảo mật",
-  "nav_contact": "Liên hệ"
+  "nav_contact": "Liên hệ",
+  "share_image": "Chia sẻ ảnh kết quả",
+  "card_score_label": "Điểm dự kiến",
+  "card_footer": "Test miễn phí 5 phút · hango.kr",
+  "submit_error": "Gửi không thành công. Vui lòng thử lại sau giây lát."
 }

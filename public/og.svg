@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Pretendard, -apple-system, 'Segoe UI', 'Noto Sans KR', sans-serif">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect width="1200" height="150" fill="#0f8a86"/>
+  <text x="64" y="97" fill="#ffffff" font-size="52" font-weight="700">hango</text>
+  <text x="1136" y="92" fill="#ffffff" fill-opacity="0.9" font-size="28" text-anchor="end">hango.kr</text>
+  <text x="64" y="300" fill="#1a1f2b" font-size="60" font-weight="800">내 한국어, TOPIK 2급에</text>
+  <text x="64" y="378" fill="#1a1f2b" font-size="60" font-weight="800">얼마나 가까울까?</text>
+  <text x="64" y="452" fill="#5b6472" font-size="34">한국에서 일하는 외국인을 위한 무료 5분 진단</text>
+  <text x="64" y="500" fill="#5b6472" font-size="34">E-7-4 · 사회통합프로그램 한국어 준비</text>
+  <rect x="64" y="540" width="360" height="70" rx="12" fill="#0f8a86"/>
+  <text x="244" y="585" fill="#ffffff" font-size="30" font-weight="600" text-anchor="middle">무료로 진단하기</text>
+</svg>

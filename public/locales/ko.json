@@ -38,5 +38,9 @@
   "nav_guide": "한국어 시험·비자 가이드",
   "nav_about": "hango 소개",
   "nav_privacy": "개인정보처리방침",
-  "nav_contact": "문의"
+  "nav_contact": "문의",
+  "share_image": "결과 이미지 공유",
+  "card_score_label": "예상 점수",
+  "card_footer": "무료 5분 진단 · hango.kr",
+  "submit_error": "제출에 실패했어요. 잠시 후 다시 시도해 주세요."
 }
