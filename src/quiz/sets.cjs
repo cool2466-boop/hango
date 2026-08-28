@@ -12,14 +12,17 @@
  *  - 한 세션은 한 세트를 통째로 풀며, 여러 회차를 "다시 풀기"로 순환할 수 있게 설계.
  */
 
-const diagnostic01 = require('./sets/diagnostic-01.cjs');
-
 const registry = {
-  'diagnostic-01': diagnostic01,
-  // 'eps-64': require('./sets/eps-64.cjs'),
+  'diagnostic-01': require('./sets/diagnostic-01.cjs'),
+  'diagnostic-02': require('./sets/diagnostic-02.cjs'),
+  'diagnostic-03': require('./sets/diagnostic-03.cjs'),
+  'diagnostic-04': require('./sets/diagnostic-04.cjs'),
+  'diagnostic-05': require('./sets/diagnostic-05.cjs'),
+  // 공개 기출 세트 추가 예: 'eps-64': require('./sets/eps-64.cjs'),
 };
 
-const order = ['diagnostic-01'];
+// 결과 화면 "다른 세트 풀어보기"가 이 순서로 순환한다.
+const order = ['diagnostic-01', 'diagnostic-02', 'diagnostic-03', 'diagnostic-04', 'diagnostic-05'];
 
 function listSets() {
   return order.map((id) => ({

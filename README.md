@@ -31,10 +31,19 @@ npm start                 # http://localhost:4200
 
 ## 문항 세트
 
-- `src/quiz/sets/diagnostic-01.cjs` — TOPIK I 유형 참고 **자체 창작** 15문항 (저작권 안전, 기본 제공)
-- 공개 기출 세트 추가: `src/quiz/sets/<id>.cjs` 생성 → `src/quiz/sets.cjs` 의 `registry`/`order` 에 등록
-  - 재배포 약관 확인 필수. **EPS-TOPIK 공개문제집(한국산업인력공단)** 이 학습목적 공개라 가장 안전
-  - 세트가 여러 개면 결과 화면의 "다른 세트 풀어보기"가 순환
+- `src/quiz/sets/diagnostic-01.cjs` ~ `diagnostic-05.cjs` — TOPIK I 유형 참고 **자체 창작** 각 15문항 (총 75문항, 저작권 안전, 기본 제공)
+- 결과 화면 "다른 세트 풀어보기"가 `sets.cjs` 의 `order` 순서대로 순환
+- 검증: `node scripts/validate-sets.cjs` (choices/answer 인덱스/중복/정답분포 확인)
+
+### 공개 기출 세트 추가 (나중에)
+
+1. `src/quiz/sets/eps-64.cjs` 형태로 파일 생성 — 포맷은 diagnostic 세트와 동일
+   (`{ title, source: 'eps-public', level, questions: [{ passage?, prompt, choices, answer }] }`)
+2. `src/quiz/sets.cjs` 의 `registry` 와 `order` 에 등록
+3. **재배포 약관 확인 필수**:
+   - EPS-TOPIK 공개문제집(한국산업인력공단) — 학습 목적 공개, 가장 안전
+   - TOPIK 기출(국립국제교육원) — 공개 회차라도 재배포 조건 확인 필요
+4. `node scripts/validate-sets.cjs` 로 검증 후 커밋
 
 ## 관리자 (배포 테스트 판정)
 
