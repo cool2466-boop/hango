@@ -211,6 +211,7 @@
   });
   window.addEventListener('i18n:changed', function () {
     if (screens.quiz.classList.contains('is-active')) renderQuestion();
+    if (screens.result.classList.contains('is-active') && state.result) renderResult(state.result);
   });
 
   // --- 부팅 ---------------------------------------------------------
