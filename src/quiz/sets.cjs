@@ -13,6 +13,11 @@
  */
 
 const registry = {
+  'eps-01': require('./sets/eps-01.cjs'),
+  'eps-02': require('./sets/eps-02.cjs'),
+  'eps-03': require('./sets/eps-03.cjs'),
+  'eps-04': require('./sets/eps-04.cjs'),
+  'eps-05': require('./sets/eps-05.cjs'),
   'diagnostic-01': require('./sets/diagnostic-01.cjs'),
   'diagnostic-02': require('./sets/diagnostic-02.cjs'),
   'diagnostic-03': require('./sets/diagnostic-03.cjs'),
@@ -22,7 +27,7 @@ const registry = {
 };
 
 // 결과 화면 "다른 세트 풀어보기"가 이 순서로 순환한다.
-const order = ['diagnostic-01', 'diagnostic-02', 'diagnostic-03', 'diagnostic-04', 'diagnostic-05'];
+const order = ['eps-01', 'eps-02', 'eps-03', 'eps-04', 'eps-05', 'diagnostic-01', 'diagnostic-02', 'diagnostic-03', 'diagnostic-04', 'diagnostic-05'];
 
 function listSets() {
   return order.map((id) => ({
