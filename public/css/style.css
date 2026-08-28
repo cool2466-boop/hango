@@ -150,3 +150,32 @@ h3 { font-size: 1.1rem; margin: 0 0 10px; }
 .doc .lang-block { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 28px; }
 .doc .back { display: inline-block; margin-top: 8px; color: var(--accent); font-weight: 600; text-decoration: none; }
 .doc time { color: var(--text-soft); font-size: .85rem; }
+
+/* 가이드(SEO) 아티클 */
+.article { line-height: 1.72; }
+.article h1 { font-size: 1.55rem; line-height: 1.35; text-wrap: balance; margin: 16px 0 10px; }
+.article .lede { font-size: 1.08rem; color: var(--text); background: var(--accent-soft); border-radius: 10px; padding: 14px 16px; margin: 0 0 20px; }
+.article h2 { font-size: 1.15rem; margin: 26px 0 8px; }
+.article h3 { font-size: 1rem; color: var(--text-soft); text-transform: none; letter-spacing: 0; margin: 16px 0 6px; }
+.article p, .article li { color: var(--text); }
+.article ul, .article ol { padding-left: 22px; display: grid; gap: 7px; margin: 10px 0; }
+.article table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .95rem; }
+.article th, .article td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+.article th { background: var(--bg); }
+.article .note { font-size: .88rem; color: var(--text-soft); border-left: 3px solid var(--border); padding-left: 12px; margin: 16px 0; }
+.article a { color: var(--accent); }
+
+.cta-box { background: var(--surface); border: 1px solid var(--accent); border-radius: var(--radius); padding: 20px; margin: 28px 0; text-align: center; }
+.cta-box p { margin: 0 0 6px; }
+.cta-box .btn { margin-top: 10px; display: inline-block; text-decoration: none; }
+
+.related { border-top: 1px solid var(--border); padding-top: 18px; margin-top: 24px; }
+.related h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-soft); margin: 0 0 10px; }
+.related ul { list-style: none; padding: 0; display: grid; gap: 8px; }
+.related a { color: var(--accent); font-weight: 600; text-decoration: none; }
+
+.guide-list { list-style: none; padding: 0; display: grid; gap: 12px; margin: 20px 0; }
+.guide-list a { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-decoration: none; color: var(--text); }
+.guide-list a:hover { border-color: var(--accent); }
+.guide-list strong { color: var(--accent); display: block; margin-bottom: 4px; }
+.guide-list span { color: var(--text-soft); font-size: .92rem; }

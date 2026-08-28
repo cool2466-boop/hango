@@ -45,6 +45,15 @@ npm start                 # http://localhost:4200
    - TOPIK 기출(국립국제교육원) — 공개 회차라도 재배포 조건 확인 필요
 4. `node scripts/validate-sets.cjs` 로 검증 후 커밋
 
+## SEO 가이드 (유통 = 검색 유입)
+
+- `public/guide/*.html` (한국어), `public/en/guide/*.html` (영어) — 실제 검색어를 타겟한 가이드 6종.
+  각 페이지가 진단(`utm_source=guide`)으로 연결됨.
+- `robots.txt` + `sitemap.xml` (privacy는 noindex 제외).
+- 페이지 추가/수정 후: `node scripts/build-sitemap.cjs` 로 sitemap 재생성.
+- 배포 후 Google Search Console / 네이버 서치어드바이저에 `https://hango.kr/sitemap.xml` 제출.
+- 다음 배치: vi/ne/id 번역, "TOPIK 접수 방법" 등 절차형 문서.
+
 ## 관리자 (배포 테스트 판정)
 
 - `GET /admin/stats?token=<ADMIN_TOKEN>` — 퍼널·UTM·밴드 분포
