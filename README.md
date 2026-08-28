@@ -16,7 +16,8 @@
 
 ## 스택
 
-- Node.js ≥ 20, Express 5, MySQL 8, 순수 HTML/CSS/JS (빌드 없음), PM2
+- Node.js ≥ 20, Express 5, MySQL 8, 순수 HTML/CSS/JS (빌드 없음), PM2, Apache 리버스 프록시
+- 포트 4200 (서버 공용 호스트: 4000=jeju-jobmatch, 4100=tripdrop)
 - 프론트 i18n: `public/locales/*.json` (ko·en·vi 완역 / km·ne·id 영어 폴백)
 
 ## 로컬 실행
@@ -25,7 +26,7 @@
 cp .env.example .env      # DB 값 입력
 npm install
 npm run migrate           # db/schema.sql 적용
-npm start                 # http://localhost:4100
+npm start                 # http://localhost:4200
 ```
 
 ## 문항 세트

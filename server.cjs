@@ -9,7 +9,7 @@ const adminRouter = require('./src/routes/admin.cjs');
 
 const app = express();
 
-// nginx 리버스 프록시 뒤 - 클라이언트 IP / 프로토콜 인식
+// Apache 리버스 프록시 뒤 - 클라이언트 IP / 프로토콜 인식
 app.set('trust proxy', Number(process.env.TRUST_PROXY || 1));
 
 app.use(express.json({ limit: '256kb' }));
@@ -32,7 +32,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const port = Number(process.env.PORT || 4100);
+const port = Number(process.env.PORT || 4200);
 app.listen(port, '127.0.0.1', () => {
   console.log(`[hango] listening on 127.0.0.1:${port} (${process.env.NODE_ENV || 'development'})`);
 });
