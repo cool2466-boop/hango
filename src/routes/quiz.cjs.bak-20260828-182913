@@ -7,7 +7,6 @@ const rateLimit = require('express-rate-limit');
 const pool = require('../db.cjs');
 const { listSets, getSet, publicSet, nextSetId } = require('../quiz/sets.cjs');
 const { score } = require('../quiz/scoring.cjs');
-const { sendResultEmail } = require('../mail.cjs');
 
 const router = express.Router();
 
@@ -140,15 +139,6 @@ router.post('/leads', writeLimiter, async (req, res) => {
         clean(b.band, 16),
       ]
     );
-    // 결과지 이메일 발송 (contact_type=email 일 때만, 응답은 기다리지 않음)
-    if (contactType === 'email' && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contactValue)) {
-      const pt = Number.isInteger(b.projected_total) ? b.projected_total : 0;
-      const band = clean(b.band, 16) || 'below1';
-      const lang = clean(b.lang, 8) || 'ko';
-      sendResultEmail({ to: contactValue, lang, band, projectedTotal: pt })
-        .then((r) => console.log('[mail] result sent to', contactValue, r.ok ? 'ok' : 'FAIL:' + r.error))
-        .catch((e) => console.error('[mail]', e.message));
-    }
     res.json({ ok: true });
   } catch (err) {
     console.error('[leads]', err.message);
