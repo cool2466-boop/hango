@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>hango — TOPIK 2급 진단 테스트</title>
+  <meta name="description" content="한국에서 일하는 외국인을 위한 무료 TOPIK 2급 진단 테스트. 5분 안에 내 한국어 실력을 확인하세요." />
+  <meta property="og:title" content="무료 TOPIK 2급 진단 테스트 · hango" />
+  <meta property="og:description" content="5분이면 끝. 내 한국어가 TOPIK 2급에 얼마나 가까운지 지금 확인하세요." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">hango</a>
+    <label class="lang-picker">
+      <span class="visually-hidden" data-i18n="lang_label">언어</span>
+      <select id="langSelect" aria-label="language">
+        <option value="ko">한국어</option>
+        <option value="en">English</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="km">ភាសាខ្មែរ</option>
+        <option value="ne">नेपाली</option>
+        <option value="id">Bahasa Indonesia</option>
+      </select>
+    </label>
+  </header>
+
+  <main class="wrap">
+    <!-- 인트로 -->
+    <section id="screen-intro" class="screen is-active">
+      <h1 data-i18n="app_title">내 한국어, TOPIK 2급에 얼마나 가까울까?</h1>
+      <p class="lead" data-i18n="app_subtitle">한국에서 일하는 외국인을 위한 무료 진단 테스트. 15문항, 약 5분.</p>
+      <ul class="bullets">
+        <li data-i18n="intro_point_1">TOPIK 2급은 E-7-4(숙련기능인력)·사회통합프로그램에서 요구됩니다.</li>
+        <li data-i18n="intro_point_2">지금 실력과 2급까지 남은 점수를 바로 알려드립니다.</li>
+        <li data-i18n="intro_point_3">회원가입 없이 바로 시작.</li>
+      </ul>
+      <button class="btn btn-primary" id="startBtn" data-i18n="start_button">진단 시작하기</button>
+    </section>
+
+    <!-- 문항 -->
+    <section id="screen-quiz" class="screen">
+      <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+      <p class="progress-text"><span id="qNow">1</span> / <span id="qTotal">15</span></p>
+      <div id="questionBox" class="question-box"></div>
+      <div class="quiz-nav">
+        <button class="btn btn-ghost" id="prevBtn" data-i18n="prev_button">이전</button>
+        <button class="btn btn-primary" id="nextBtn" data-i18n="next_button">다음</button>
+      </div>
+    </section>
+
+    <!-- 결과 -->
+    <section id="screen-result" class="screen">
+      <h2 data-i18n="result_title">진단 결과</h2>
+      <div class="score-card">
+        <div class="score-num"><span id="scoreProjected">0</span><span class="score-max"> / 200</span></div>
+        <p class="score-band" id="scoreBand"></p>
+        <p class="score-gap" id="scoreGap"></p>
+      </div>
+      <p class="disclaimer" data-i18n="result_disclaimer">※ 읽기 문항 기반 추정치입니다. 실제 시험은 듣기·읽기·쓰기가 포함됩니다.</p>
+
+      <div class="lead-box" id="leadBox">
+        <h3 data-i18n="lead_prompt">결과지와 2급 합격 학습 플랜을 보내드릴까요?</h3>
+        <div class="field">
+          <label for="contactValue" id="contactLabel" data-i18n="lead_email_label">이메일</label>
+          <div class="contact-row">
+            <select id="contactType" aria-label="contact type">
+              <option value="email" data-i18n="contact_email">이메일</option>
+              <option value="kakao" data-i18n="contact_kakao">카카오톡 ID</option>
+              <option value="phone" data-i18n="contact_phone">전화번호</option>
+            </select>
+            <input type="text" id="contactValue" autocomplete="off" />
+          </div>
+        </div>
+        <label class="consent">
+          <input type="checkbox" id="consentChk" />
+          <span data-i18n="lead_consent">학습 정보 수신에 동의합니다. 언제든 수신 거부할 수 있습니다.</span>
+        </label>
+        <button class="btn btn-primary" id="leadBtn" data-i18n="lead_submit_button">결과지 받기</button>
+        <p class="lead-thanks" id="leadThanks" hidden data-i18n="lead_thanks">감사합니다! 곧 보내드릴게요.</p>
+      </div>
+
+      <div class="share-box">
+        <p data-i18n="share_prompt">친구에게 도전장을 보내세요</p>
+        <div class="share-btns">
+          <button class="btn btn-ghost" data-share="kakao" data-i18n="share_kakao">카카오톡</button>
+          <button class="btn btn-ghost" data-share="facebook" data-i18n="share_facebook">페이스북</button>
+          <button class="btn btn-ghost" data-share="copy" data-i18n="share_copy">링크 복사</button>
+        </div>
+      </div>
+
+      <button class="btn btn-ghost btn-block" id="retryBtn" data-i18n="retry_button">다른 세트 풀어보기</button>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>hango.kr</span>
+  </footer>
+
+  <script src="/js/i18n.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
