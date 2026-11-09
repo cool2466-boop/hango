@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hango | 외국인 근로자 TOPIK 2급 진단 & 비자(E-7-4) 지원 솔루션</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/static/pretendard.css">
+  <style>
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+    .fade-in { animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes wave {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+    .wave-bar { animation: wave 1.2s infinite ease-in-out; }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 min-h-screen flex flex-col justify-between selection:bg-blue-100 selection:text-blue-900">
+
+  <!-- ===========================
+       1. HEADER & NAVIGATION
+  =========================== -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-xs">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-3">
+      
+      <!-- Brand Logo & Main Navigation Links -->
+      <div class="flex items-center justify-between w-full md:w-auto space-x-4">
+        <button onclick="navGo('landing')" class="flex items-center space-x-2 text-left shrink-0 group">
+          <span class="text-2xl font-black tracking-tight text-blue-600 group-hover:text-blue-700 transition">hango</span>
+          <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200/60">TOPIK & VISA</span>
+        </button>
+
+        <!-- Mobile & Desktop Navigation Menu -->
+        <nav class="flex items-center space-x-3 sm:space-x-6 text-xs sm:text-sm font-semibold text-slate-600 overflow-x-auto py-1">
+          <button onclick="navGo('landing')" id="nav-item-home" class="text-blue-600 font-bold transition whitespace-nowrap">홈</button>
+          <button onclick="startSampleTest()" id="nav-item-sample" class="hover:text-slate-900 transition whitespace-nowrap">3분 약식 진단</button>
+          <button onclick="navGo('catalog')" id="nav-item-sets" class="hover:text-slate-900 transition whitespace-nowrap">실전 50세트</button>
+          <button onclick="openVisaGuideInfo()" id="nav-item-guide" class="hover:text-slate-900 transition whitespace-nowrap">비자 가이드</button>
+        </nav>
+      </div>
+
+      <!-- Utilities: Realtime i18n Language Switcher & Account Chip -->
+      <div class="flex items-center justify-end w-full md:w-auto space-x-3 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
+        <!-- Multilingual Buttons (KO / VI / EN) -->
+        <div class="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-semibold">
+          <button onclick="setGlobalLang('ko')" id="btn-lang-ko" class="px-2 py-1 rounded bg-white text-slate-900 font-bold shadow-xs">KO</button>
+          <button onclick="setGlobalLang('vi')" id="btn-lang-vi" class="px-2 py-1 rounded text-slate-500 hover:text-slate-900">VI</button>
+          <button onclick="setGlobalLang('en')" id="btn-lang-en" class="px-2 py-1 rounded text-slate-500 hover:text-slate-900">EN</button>
+        </div>
+
+        <!-- Auth Account Area -->
+        <div id="auth-button-area" class="shrink-0">
+          <button onclick="openAuthModal('login')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 transition" id="t-btn-login">
+            로그인 / 정보등록
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===========================
+       2. MAIN APPLICATION ROUTER
+  =========================== -->
+  <main class="max-w-4xl w-full mx-auto px-4 py-8 flex-1">
+
+    <!-- VIEW 1: PORTAL LANDING (선택 포털) -->
+    <section id="view-landing" class="fade-in space-y-8">
+      
+      <!-- Hero Section Banner -->
+      <div class="bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+        <div class="max-w-2xl space-y-3 relative z-10">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-200 border border-blue-400/30 backdrop-blur-sm" id="t-hero-tag">
+            외국인 근로자 E-9 ➔ E-7-4 숙련인력 전환 지원
+          </span>
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight" id="t-hero-headline">
+            체류 비자 연장을 위한<br><span class="text-blue-300">TOPIK 2급 실전 평가</span> 지원 서비스
+          </h1>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl" id="t-hero-subtitle">
+            듣기·읽기 기출 기반 50세트 문제은행과 3분 약식 진단으로 실력을 검증하고, 비자 가산점 10점 충족 여부와 맞춤형 지원 가이드를 받아보세요.
+          </p>
+        </div>
+      </div>
+
+      <!-- Two Core Pathways (3분 약식 vs 50세트 문제은행) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <!-- Option A: 3분 약식 진단 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:border-blue-500 transition-all group flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-bold group-hover:scale-105 transition">
+              ⚡
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-lg font-bold text-slate-900" id="t-opt1-title">3분 약식 진단 테스트</h3>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-600">무료 서비스</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1.5 leading-relaxed" id="t-opt1-desc">
+                듣기 5문항 + 읽기 5문항으로 빠르게 내 현재 급수와 E-7-4 비자 가산점 가능성을 측정합니다.
+              </p>
+            </div>
+            <ul class="text-xs text-slate-600 space-y-1.5 font-medium border-t border-slate-100 pt-3">
+              <li class="flex items-center space-x-2"><span>✓</span> <span id="t-opt1-feat1">원어민 음성 듣기 평가 포함 (총 10문항)</span></li>
+              <li class="flex items-center space-x-2"><span>✓</span> <span id="t-opt1-feat2">즉시 비자 가산점(10점) 충족 시뮬레이션</span></li>
+            </ul>
+          </div>
+
+          <button onclick="startSampleTest()" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold py-3.5 rounded-xl text-sm transition shadow-sm" id="t-btn-opt1">
+            약식 테스트 바로 시작 (Start 3-Min)
+          </button>
+        </div>
+
+        <!-- Option B: 실전 모의고사 50세트 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:border-indigo-500 transition-all group flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl font-bold group-hover:scale-105 transition">
+              📚
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-lg font-bold text-slate-900" id="t-opt2-title">실전 모의고사 50세트 풀이</h3>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-50 text-indigo-600">총 3,500문항</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1.5 leading-relaxed" id="t-opt2-desc">
+                실제 TOPIK I 규격(듣기 30문항 + 읽기 40문항 = 70문항, 200점) 50개 회차 풀을 풀고 오답 노트를 관리합니다.
+              </p>
+            </div>
+            <ul class="text-xs text-slate-600 space-y-1.5 font-medium border-t border-slate-100 pt-3">
+              <li class="flex items-center space-x-2"><span>✓</span> <span id="t-opt2-feat1">회차별 정규 70문항 200점 만점 배점</span></li>
+              <li class="flex items-center space-x-2"><span>✓</span> <span id="t-opt2-feat2">다국어(VI, EN, KO) 대본 및 해설 제공</span></li>
+            </ul>
+          </div>
+
+          <button onclick="navGo('catalog')" class="w-full mt-6 bg-slate-900 hover:bg-slate-800 active:scale-[0.99] text-white font-bold py-3.5 rounded-xl text-sm transition shadow-sm" id="t-btn-opt2">
+            50세트 전체 문제은행 열기
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Official Info Box -->
+    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 gap-4">
+      <div class="flex items-center space-x-3">
+        <span class="text-xl">⚖️</span>
+        <div>
+          <span class="font-bold text-slate-800">E-7-4 숙련기능인력 선발 한국어 요건 안내</span>
+          <p class="text-slate-500 mt-0.5">TOPIK 2급 취득 시 기본 가산점 10점 인정 / 체류 만료 4개월 전부터 수시 신청 가능</p>
+        </div>
+      </div>
+      <button onclick="openVisaGuideModal()" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition shrink-0 shadow-sm">
+        비자 요건 상세안내 ➔
+      </button>
+    </div>
+
+    </section>
+
+    <!-- VIEW 2: 50 FULL SETS CATALOG (카탈로그) -->
+    <section id="view-catalog" class="hidden fade-in space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-5">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900" id="t-catalog-title">TOPIK I 정규 실전 50세트</h2>
+          <p class="text-xs text-slate-500 mt-1" id="t-catalog-desc">듣기 30문항 + 읽기 40문항 총 70문항(200점 만점) 모의고사 목록입니다.</p>
+        </div>
+        <div class="flex items-center space-x-2 text-xs">
+          <input type="text" id="catalog-search-input" oninput="filterCatalogSets()" placeholder="회차 검색 (예: 1, 15)" class="border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-blue-600 focus:outline-none bg-white">
+        </div>
+      </div>
+
+      <div id="sets-catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- VIEW 3: EXAM RUNNER (듣기 플레이어 통합 퀴즈) -->
+    <section id="view-test" class="hidden fade-in space-y-5">
+      
+      <!-- Top Test Status Bar -->
+      <div class="bg-white rounded-xl p-4 border border-slate-200 flex items-center justify-between shadow-xs">
+        <div>
+          <span class="text-xs font-bold text-blue-600 uppercase" id="test-mode-label">실전 모의고사</span>
+          <h3 class="text-sm font-bold text-slate-900" id="test-title-label">제1회</h3>
+        </div>
+        <div class="text-right">
+          <div class="text-xs font-bold text-slate-400" id="q-counter">QUESTION 1 / 10</div>
+          <div class="text-sm font-black text-blue-600" id="q-percent">10%</div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+        <div id="q-progress-bar" class="bg-blue-600 h-full rounded-full transition-all duration-300 w-[10%]"></div>
+      </div>
+
+      <!-- Audio Player Box for Listening Questions -->
+      <div id="listening-player-box" class="hidden bg-gradient-to-r from-blue-900 to-indigo-900 rounded-2xl p-4 sm:p-5 text-white shadow-md space-y-3">
+        <div class="flex items-center justify-between text-xs font-bold border-b border-white/10 pb-2">
+          <span class="flex items-center space-x-2">
+            <span>🎧</span>
+            <span>TOPIK I 원어민 듣기 평가 음성</span>
+          </span>
+          <span id="audio-speed-indicator" class="text-blue-200">배속: 1.0x (표준)</span>
+        </div>
+
+        <div class="flex items-center justify-between gap-4">
+          <button onclick="toggleAudioPlay()" id="btn-audio-play" class="w-12 h-12 rounded-full bg-white text-blue-900 flex items-center justify-center font-bold text-lg hover:bg-blue-50 transition shrink-0 shadow-sm">
+            ▶
+          </button>
+
+          <div class="flex-1 space-y-1">
+            <div class="flex items-center space-x-1 h-5 justify-center" id="audio-wave-anim">
+              <span class="w-1 bg-blue-300/40 rounded-full h-2"></span>
+              <span class="w-1 bg-blue-300/40 rounded-full h-3"></span>
+              <span class="w-1 bg-blue-300/40 rounded-full h-4"></span>
+              <span class="w-1 bg-blue-300/40 rounded-full h-2"></span>
+            </div>
+            <div class="text-[11px] text-center text-blue-200 font-mono" id="audio-status-text">재생 버튼을 누르면 음성이 나옵니다.</div>
+          </div>
+
+          <div class="flex flex-col space-y-1 shrink-0 text-xs">
+            <button onclick="restartAudio()" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-blue-100 font-semibold">다시 듣기</button>
+            <button onclick="toggleAudioSpeed()" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-blue-100 font-semibold">배속 변경</button>
+          </div>
+        </div>
+
+        <div class="pt-1 text-right">
+          <button onclick="toggleAudioScript()" class="text-xs text-blue-200 hover:text-white underline font-semibold">
+            📜 대본(스크립트) 열람하기
+          </button>
+        </div>
+
+        <div id="audio-script-box" class="hidden p-3 rounded-xl bg-black/30 border border-white/10 text-xs text-slate-200 whitespace-pre-line leading-relaxed"></div>
+      </div>
+
+      <!-- Question Card Body -->
+      <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-5">
+        <div class="space-y-1">
+          <span class="text-[11px] font-bold text-blue-600 tracking-wider uppercase px-2 py-0.5 rounded bg-blue-50" id="q-category-tag">듣기 영역</span>
+          <h2 id="q-instruction" class="text-base font-bold text-slate-900 pt-1"></h2>
+        </div>
+
+        <!-- Question Context Box -->
+        <div id="q-context" class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-sm font-medium leading-relaxed text-slate-800 whitespace-pre-line"></div>
+
+        <!-- Options Container -->
+        <div id="q-options" class="space-y-2.5 pt-1"></div>
+
+        <!-- Bottom Controls & Explanation -->
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <button onclick="toggleHintBox()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center space-x-1" id="t-btn-hint">
+            <span>💡 다국어 힌트 및 해설 보기</span>
+          </button>
+
+          <div class="flex items-center space-x-2">
+            <button id="btn-prev-q" onclick="prevQuestion()" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 font-medium hidden">
+              이전 문제
+            </button>
+            <button onclick="skipQuestion()" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50">
+              다음
+            </button>
+          </div>
+        </div>
+
+        <!-- Collapsible Hint Box -->
+        <div id="q-hint-box" class="hidden p-4 rounded-xl bg-amber-50/90 border border-amber-200/70 text-xs text-amber-900 leading-relaxed space-y-1">
+          <p class="font-bold">해설 가이드:</p>
+          <p id="q-hint-text"></p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- VIEW 4: BLURRED RESULT & UNLOCK FORM (결과 잠금 퍼널) -->
+    <section id="view-lead" class="hidden fade-in space-y-6">
+      
+      <div class="text-center space-y-2 max-w-md mx-auto">
+        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto text-2xl font-bold shadow-xs">
+          🔒
+        </div>
+        <h2 class="text-2xl font-bold text-slate-900" id="t-lead-title">채점이 모두 완료되었습니다!</h2>
+        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed" id="t-lead-desc">
+          내 예상 점수와 <strong>E-7-4 비자 전환 가능 여부</strong>를 확인하려면 체류 정보를 입력해 주세요.
+        </p>
+      </div>
+
+      <!-- Teaser Box with Blurred Score Card underneath -->
+      <div class="relative max-w-lg mx-auto">
+        <!-- Background Blurred Preview -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 blur-md opacity-40 select-none space-y-4">
+          <div class="text-center text-3xl font-black text-blue-600">??점 / 200점</div>
+          <div class="p-4 bg-blue-50 rounded-xl text-center text-xs text-slate-500">TOPIK 2급 합격 판정 가산점 시뮬레이션 공개 대기</div>
+        </div>
+
+        <!-- Foreground Floating Unlock Form -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-full bg-white/95 backdrop-blur-md rounded-2xl p-6 border border-slate-300 shadow-xl space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 text-center">📋 내 점수 잠금 해제 & 리포트 발급</h3>
+
+            <form onsubmit="submitLeadAndUnlockResult(event)" class="space-y-3 text-xs">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1" id="t-lbl-name">이름 (Full Name)</label>
+                <input type="text" id="lead-name" required placeholder="예: NGUYEN VAN A" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1" id="t-lbl-nat">국적 (Nationality)</label>
+                  <select id="lead-nat" class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs bg-white">
+                    <option value="Vietnam">베트남 (Việt Nam)</option>
+                    <option value="Uzbekistan">우즈베키스탄 (Oʻzbekiston)</option>
+                    <option value="Nepal">네팔 (Nepal)</option>
+                    <option value="Myanmar">미얀마 (Myanmar)</option>
+                    <option value="Cambodia">캄보디아 (Campuchia)</option>
+                    <option value="Other">기타 국가</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1" id="t-lbl-visa">현재 체류 자격 (Visa)</label>
+                  <select id="lead-visa" class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs bg-white">
+                    <option value="E-9">E-9 (비전문취업)</option>
+                    <option value="E-7-4">E-7-4 (숙련기능)</option>
+                    <option value="D-2">D-2 (유학)</option>
+                    <option value="D-10">D-10 (구직)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1" id="t-lbl-expiry">비자 만료 연월 (Expiry)</label>
+                  <input type="month" id="lead-expiry" required class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs focus:border-blue-600 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1" id="t-lbl-phone">연락처 / WhatsApp</label>
+                  <input type="tel" id="lead-phone" required placeholder="010-0000-0000" class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs focus:border-blue-600 focus:outline-none">
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">이메일 주소</label>
+                <input type="email" id="lead-email" placeholder="example@gmail.com" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+              </div>
+
+              <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-sm mt-1" id="t-btn-submit">
+                🔓 내 상세 점수 및 비자 분석 리포트 보기
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- VIEW 5: UNLOCKED RICH DIAGNOSTIC REPORT (정밀 분석 리포트) -->
+    <section id="view-result" class="hidden fade-in space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        
+        <!-- Header Profile -->
+        <div class="border-b border-slate-100 pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wide" id="t-res-header-tag">hango 공인 모의평가 종합 리포트</span>
+            <h2 id="res-user-heading" class="text-2xl font-black text-slate-900 mt-0.5">NGUYEN VAN A 회원님의 평가서</h2>
+          </div>
+          <div class="flex items-center space-x-2 text-xs">
+            <span class="px-2.5 py-1 rounded-md bg-slate-100 font-semibold text-slate-700" id="res-badge-visa">E-9 비자</span>
+            <span class="px-2.5 py-1 rounded-md bg-blue-50 font-semibold text-blue-700" id="res-badge-expiry">만료: 2027-06</span>
+          </div>
+        </div>
+
+        <!-- Score Breakdown Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-5 rounded-2xl bg-blue-50/60 border border-blue-100 text-center flex flex-col justify-center">
+            <div class="text-xs font-semibold text-slate-500" id="t-res-score-title">총점 환산</div>
+            <div id="res-total-score" class="text-4xl font-black text-blue-600 my-1.5">85<span class="text-base font-bold text-slate-400 ml-1">/ 100</span></div>
+            <div id="res-pass-label" class="text-xs font-bold text-blue-800">2급 취득 유력 (합격권)</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center flex flex-col justify-center">
+            <div class="text-xs font-semibold text-slate-500">🎧 듣기 영역 점수</div>
+            <div id="res-listen-score" class="text-3xl font-bold text-slate-800 my-1">45 / 50</div>
+            <div class="text-[11px] text-slate-400">듣기 정답률 90%</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center flex flex-col justify-center">
+            <div class="text-xs font-semibold text-slate-500">📖 읽기 영역 점수</div>
+            <div id="res-read-score" class="text-3xl font-bold text-slate-800 my-1">40 / 50</div>
+            <div class="text-[11px] text-slate-400">읽기 정답률 80%</div>
+          </div>
+        </div>
+
+        <!-- Visa Points & Recommendation -->
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+          <div class="flex items-center justify-between font-bold">
+            <span class="text-slate-800" id="t-res-visa-calc-title">E-7-4 한국어 가산점 평가</span>
+            <span id="res-points-calc" class="text-blue-600 font-black">+10점 획득 가능</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed" id="res-visa-summary-text">
+            TOPIK 2급(또는 사회통합프로그램 2단계) 요건을 만족하여 E-7-4 비자 전환 심사에서 한국어 능력 기본 배점(10점)을 안정적으로 취득할 수 있습니다.
+          </p>
+        </div>
+
+        <!-- Monetization & Consulting CTAs -->
+        <div class="space-y-3 pt-2">
+          <button onclick="requestAction('vocab')" class="w-full py-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center space-x-2" id="t-btn-vocab-down">
+            <span>📥</span>
+            <span>오답 분석 리포트 & 2급 핵심 빈출 어휘집(PDF) 수령</span>
+          </button>
+          
+          <button onclick="requestAction('consult')" class="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center space-x-2" id="t-btn-consult-req">
+            <span>⚖️</span>
+            <span>E-7-4 비자 전환 전문 출입국 행정사 무료 1:1 상담 예약</span>
+          </button>
+
+          <div class="flex items-center justify-center space-x-4 pt-2 text-xs">
+            <button onclick="navGo('catalog')" class="text-slate-600 hover:text-slate-900 font-semibold">
+              다른 실전 세트 풀기 ➔
+            </button>
+            <button onclick="navGo('landing')" class="text-slate-400 hover:text-slate-600">
+              홈으로 이동
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===========================
+       3. MODALS (PROFILE EDIT & AUTH)
+  =========================== -->
+
+  <!-- Modal A: Profile View / Edit Modal -->
+  <div id="modal-profile-edit" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl relative space-y-4">
+      <button onclick="closeProfileEditModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg">✕</button>
+      
+      <div class="space-y-1">
+        <h3 class="text-xl font-bold text-slate-900">내 프로필 정보 관리</h3>
+        <p class="text-xs text-slate-500">비자 진단 리포트 생성을 위한 기본 정보입니다.</p>
+      </div>
+
+      <form onsubmit="handleProfileUpdateSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">이름 (Full Name)</label>
+          <input type="text" id="prof-edit-name" required class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">국적 (Nationality)</label>
+            <select id="prof-edit-nat" class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs bg-white">
+              <option value="Vietnam">베트남 (Việt Nam)</option>
+              <option value="Uzbekistan">우즈베키스탄 (Oʻzbekiston)</option>
+              <option value="Nepal">네팔 (Nepal)</option>
+              <option value="Myanmar">미얀마 (Myanmar)</option>
+              <option value="Cambodia">캄보디아 (Campuchia)</option>
+              <option value="Other">기타 국가</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">현재 체류 자격</label>
+            <select id="prof-edit-visa" class="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs bg-white">
+              <option value="E-9">E-9 (비전문취업)</option>
+              <option value="E-7-4">E-7-4 (숙련기능)</option>
+              <option value="D-2">D-2 (유학)</option>
+              <option value="D-10">D-10 (구직)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">비자 만료 연월 (Expiry)</label>
+          <input type="month" id="prof-edit-expiry" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">연락처 / WhatsApp</label>
+          <input type="tel" id="prof-edit-phone" required class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+        </div>
+
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
+          저장 및 업데이트
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal B: Auth Login / Register Modal -->
+  <div id="modal-auth" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl relative space-y-4">
+      <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg">✕</button>
+      
+      <div class="space-y-1">
+        <h3 class="text-xl font-bold text-slate-900" id="auth-modal-title">로그인</h3>
+        <p class="text-xs text-slate-500">hango 계정으로 테스트 기록과 비자 분석을 관리하세요.</p>
+      </div>
+
+      <!-- One-Click Google Auth Button -->
+      <button onclick="handleGoogleSocialLogin()" class="w-full border border-slate-300 hover:bg-slate-50 font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2 text-slate-700">
+        <span>🌐</span>
+        <span>구글 계정으로 1초 로그인 (Google)</span>
+      </button>
+
+      <div class="flex items-center my-2 text-slate-300 text-[11px]">
+        <div class="flex-1 border-t border-slate-200"></div>
+        <span class="px-2 text-slate-400">또는 이메일</span>
+        <div class="flex-1 border-t border-slate-200"></div>
+      </div>
+
+      <!-- Auth Tab Switcher -->
+      <div class="flex border-b border-slate-100 text-xs font-bold">
+        <button onclick="setAuthTab('login')" id="tab-auth-login" class="flex-1 py-2 text-blue-600 border-b-2 border-blue-600">로그인</button>
+        <button onclick="setAuthTab('register')" id="tab-auth-register" class="flex-1 py-2 text-slate-400 hover:text-slate-700">회원가입</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="auth-login-form" onsubmit="handleLoginSubmit(event)" class="space-y-3">
+        <input type="email" id="login-email" required placeholder="이메일 (demo@hango.kr)" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+        <input type="password" id="login-pwd" required placeholder="비밀번호 (demo)" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs transition">로그인</button>
+      </form>
+
+      <!-- Streamlined Register Form -->
+      <form id="auth-register-form" onsubmit="handleRegisterSubmit(event)" class="hidden space-y-3">
+        <input type="text" id="reg-name" required placeholder="이름 (Full Name)" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+        <input type="email" id="reg-email" required placeholder="이메일 주소" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+        <input type="password" id="reg-pwd" required placeholder="비밀번호 설정" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:border-blue-600 focus:outline-none">
+        <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-xs transition">간편 회원가입 완료</button>
+      </form>
+
+      <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 text-[11px] text-slate-500 leading-normal">
+        * 체험용 계정: <strong>demo@hango.kr</strong> / 비밀번호: <strong>demo</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal C: E-7-4 Visa Requirements Detail Modal -->
+  <div id="modal-visa-guide" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative space-y-5 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeVisaGuideModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg font-bold">✕</button>
+      
+      <div class="space-y-1">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-wide">법무부 출입국 관리 규정</span>
+        <h3 class="text-xl font-black text-slate-900">E-7-4 숙련기능인력 비자 전환 핵심 요건</h3>
+      </div>
+
+      <!-- Requirements Content Table -->
+      <div class="space-y-4 text-xs text-slate-700">
+        
+        <!-- Section 1 -->
+        <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-100 space-y-2">
+          <div class="font-bold text-blue-900 flex items-center space-x-1.5">
+            <span>🗣️</span>
+            <span>1. 한국어 능력 배점 기준 (최대 20점)</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 pt-1 text-[11px]">
+            <div class="bg-white p-2.5 rounded-xl border border-blue-100">
+              <span class="font-bold text-slate-900 block">TOPIK 2급 / KIIP 2단계</span>
+              <span class="text-blue-600 font-bold">+10점 (기본 자격)</span>
+            </div>
+            <div class="bg-white p-2.5 rounded-xl border border-blue-100">
+              <span class="font-bold text-slate-900 block">TOPIK 3급 / KIIP 3단계</span>
+              <span class="text-blue-600 font-bold">+15점 (고득점 가점)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+            <span>⌛</span>
+            <span>2. 체류 기간 및 근속 요건</span>
+          </div>
+          <ul class="space-y-1 text-slate-600 list-disc list-inside text-[11px]">
+            <li>최근 10년 이내 E-9, E-10, H-2 자격으로 <strong>4년 이상 정상 체류</strong></li>
+            <li>현재 사업장에서 1년 이상 계속 근무 중인 자</li>
+            <li>형사처벌 또는 임금 체불 등 법위반 이력이 없는 자</li>
+          </ul>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+            <span>🏢</span>
+            <span>3. 고용주 추천서 및 우대 가점</span>
+          </div>
+          <ul class="space-y-1 text-slate-600 list-disc list-inside text-[11px]">
+            <li>소속 사업장 대표자(고용주) 추천서 소지 시 추가 가점 부여</li>
+            <li>뿌리기업, 농축산업, 어업 분야 근무자 우대 가점 적용</li>
+            <li>지자체 추천(광역지자체 추천 인원 선발) 시 우대</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+        <span class="text-[11px] text-slate-400">자세한 심사는 출입국 전담 행정사와 상담하세요.</span>
+        <button onclick="closeVisaGuideModal()" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition">
+          확인 완료
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-200 bg-white py-8 text-center text-xs text-slate-400">
+    <div class="max-w-4xl mx-auto px-4 space-y-2">
+      <div class="flex items-center justify-center space-x-4 font-semibold text-slate-600">
+        <span>hango.kr</span>
+        <span>•</span>
+        <span>TOPIK II Assessment</span>
+        <span>•</span>
+        <span>E-7-4 Support Solution</span>
+        <span>•</span>
+        <a href="admin.html" target="_blank" class="text-slate-400 hover:text-slate-600 underline">Admin Portal</a>
+      </div>
+      <p class="text-[11px]" id="t-footer-desc">hango는 한국에서 성실히 일하는 외국인 근로자의 안정적인 비자 연장과 정착을 돕는 무료 한국어 평가 지원 서비스입니다.</p>
+    </div>
+  </footer>
+
+  <!-- ===========================
+       4. ALL JAVASCRIPT LOGIC
+  =========================== -->
+  <script>
+    // ------------------------------------------------------------------
+    // A. GLOBAL STATE & DATABASES
+    // ------------------------------------------------------------------
+    let currentLang = 'ko';
+    let currentUser = null;
+    let activeTest = null;
+    let activeIdx = 0;
+    let activeAnswers = {};
+    let isPlayingAudio = false;
+    let audioSpeed = 1.0;
+    let currentUtterance = null;
+    let generated50Sets = [];
+
+    // ------------------------------------------------------------------
+    // B. MULTILINGUAL DICTIONARY (i18n)
+    // ------------------------------------------------------------------
+    const i18n = {
+      ko: {
+        navHome: "홈",
+        navSample: "3분 약식 진단",
+        navSets: "실전 50세트 문제은행",
+        navGuide: "E-7-4 비자 가이드",
+        btnLogin: "로그인 / 정보등록",
+        heroTag: "외국인 근로자 E-9 ➔ E-7-4 숙련인력 전환 지원",
+        heroHeadline: "체류 비자 연장을 위한<br><span class='text-blue-300'>TOPIK 2급 실전 평가</span> 지원 서비스",
+        heroSubtitle: "듣기·읽기 기출 기반 50세트 문제은행과 3분 약식 진단으로 실력을 검증하고, 비자 가산점 10점 충족 여부와 맞춤형 지원 가이드를 받아보세요.",
+        opt1Title: "3분 약식 진단 테스트",
+        opt1Desc: "듣기 5문항 + 읽기 5문항으로 빠르게 내 현재 급수와 E-7-4 비자 가산점 가능성을 측정합니다.",
+        opt1Feat1: "원어민 음성 듣기 평가 포함 (총 10문항)",
+        opt1Feat2: "즉시 비자 가산점(10점) 충족 시뮬레이션",
+        btnOpt1: "약식 테스트 바로 시작 (Start 3-Min)",
+        opt2Title: "실전 모의고사 50세트 풀이",
+        opt2Desc: "실제 TOPIK I 규격(듣기 30문항 + 읽기 40문항 = 70문항, 200점) 50개 회차 풀을 풀고 오답 노트를 관리합니다.",
+        opt2Feat1: "회차별 정규 70문항 200점 만점 배점",
+        opt2Feat2: "다국어(VI, EN, KO) 대본 및 해설 제공",
+        btnOpt2: "50세트 전체 문제은행 열기",
+        catalogTitle: "TOPIK I 정규 실전 50세트",
+        catalogDesc: "듣기 30문항 + 읽기 40문항 총 70문항(200점 만점) 모의고사 목록입니다.",
+        btnHint: "💡 다국어 힌트 및 해설 보기",
+        leadTitle: "채점이 모두 완료되었습니다!",
+        leadDesc: "내 예상 점수와 <strong>E-7-4 비자 전환 가능 여부</strong>를 확인하려면 체류 정보를 입력해 주세요.",
+        lblName: "이름 (Full Name)",
+        lblNat: "국적 (Nationality)",
+        lblVisa: "현재 체류 자격 (Visa)",
+        lblExpiry: "비자 만료 연월 (Expiry)",
+        lblPhone: "연락처 / WhatsApp",
+        btnSubmit: "🔓 내 상세 점수 및 비자 분석 리포트 보기",
+        resHeaderTag: "hango 공인 모의평가 종합 리포트",
+        resScoreTitle: "총점 환산",
+        resVisaCalcTitle: "E-7-4 한국어 가산점 평가",
+        btnVocabDown: "오답 분석 리포트 & 2급 핵심 빈출 어휘집(PDF) 수령",
+        btnConsultReq: "E-7-4 비자 전환 전문 출입국 행정사 무료 1:1 상담 예약",
+        footerDesc: "hango는 한국에서 성실히 일하는 외국인 근로자의 안정적인 비자 연장과 정착을 돕는 무료 한국어 평가 지원 서비스입니다."
+      },
+      vi: {
+        navHome: "Trang chủ",
+        navSample: "Thi thử 3 phút",
+        navSets: "Kho 50 bộ đề",
+        navGuide: "Hướng dẫn E-7-4",
+        btnLogin: "Đăng nhập / Hồ sơ",
+        heroTag: "Giải pháp hỗ trợ chuyển đổi Visa E-9 sang E-7-4 cho lao động nước ngoài",
+        heroHeadline: "Nền tảng thi thử <span class='text-blue-300'>TOPIK 2 thực chiến</span> để gia hạn Visa",
+        heroSubtitle: "Kiểm tra năng lực Nghe & Đọc qua 50 bộ đề thi chuẩn và nhận báo cáo tính 10 điểm cộng Visa E-7-4 hoàn toàn miễn phí.",
+        opt1Title: "Bài kiểm tra nhanh 3 phút",
+        opt1Desc: "Bao gồm 5 câu Nghe + 5 câu Đọc giúp đánh giá nhanh cơ hội nhận điểm cộng E-7-4.",
+        opt1Feat1: "Có phát âm thanh giọng đọc chuẩn (10 câu)",
+        opt1Feat2: "Tính toán ngay 10 điểm cộng Visa E-7-4",
+        btnOpt1: "Làm bài kiểm tra nhanh ngay",
+        opt2Title: "50 Bộ đề thi thử thực chiến",
+        opt2Desc: "Trải nghiệm 50 bộ đề chuẩn kỳ thi TOPIK I (30 câu Nghe + 40 câu Đọc = 70 câu, 200 điểm).",
+        opt2Feat1: "70 câu hỏi chuẩn đề thi thật (thang điểm 200)",
+        opt2Feat2: "Hỗ trợ kịch bản bài nghe & giải đề đa ngữ",
+        btnOpt2: "Mở kho 50 bộ đề thi thử",
+        catalogTitle: "50 Bộ đề thi thử TOPIK I tiêu chuẩn",
+        catalogDesc: "Danh sách 50 đề thi thử 70 câu bám sát cấu trúc đề thi chính thức.",
+        btnHint: "💡 Xem gợi ý & giải thích đa ngữ",
+        leadTitle: "Đã hoàn thành chấm điểm!",
+        leadDesc: "Vui lòng nhập thông tin cơ bản để xem điểm số và <strong>khả năng chuyển đổi visa E-7-4</strong> của bạn.",
+        lblName: "Họ và tên (Full Name)",
+        lblNat: "Quốc tịch (Nationality)",
+        lblVisa: "Visa hiện tại (Visa)",
+        lblExpiry: "Thời hạn visa (Expiry)",
+        lblPhone: "Số điện thoại / Zalo / WhatsApp",
+        btnSubmit: "🔓 Mở khóa điểm số & Báo cáo Visa",
+        resHeaderTag: "Báo cáo đánh giá tổng hợp hango",
+        resScoreTitle: "Tổng điểm quy đổi",
+        resVisaCalcTitle: "Đánh giá điểm cộng tiếng Hàn E-7-4",
+        btnVocabDown: "Nhận sổ tay giải đề & 500 từ vựng TOPIK 2 (PDF)",
+        btnConsultReq: "Đặt lịch tư vấn miễn phí thủ tục đổi Visa E-7-4",
+        footerDesc: "hango là dịch vụ hỗ trợ đánh giá tiếng Hàn miễn phí giúp lao động nước ngoài làm việc chăm chỉ tại Hàn Quốc gia hạn visa và định cư ổn định."
+      },
+      en: {
+        navHome: "Home",
+        navSample: "3-Min Quick Test",
+        navSets: "50 Exam Sets",
+        navGuide: "E-7-4 Visa Guide",
+        btnLogin: "Login / Profile",
+        heroTag: "Foreign Worker E-9 to E-7-4 Skilled Worker Support Solution",
+        heroHeadline: "Platform for <span class='text-blue-300'>TOPIK Level 2 Exams</span> & Visa Extension",
+        heroSubtitle: "Verify your listening & reading skills with 50 standardized mock exam sets or a 3-minute quick test, and receive your 10-point bonus calculation.",
+        opt1Title: "3-Minute Quick Diagnostic",
+        opt1Desc: "5 Listening + 5 Reading questions to quickly assess your current level and E-7-4 bonus eligibility.",
+        opt1Feat1: "Includes native audio listening (10 Qs)",
+        opt1Feat2: "Instant 10-point bonus simulation",
+        btnOpt1: "Start 3-Minute Quick Test",
+        opt2Title: "50-Set Full Mock Exam Bank",
+        opt2Desc: "Complete 50 authentic TOPIK I sets (30 Listening + 40 Reading = 70 Qs, 200 pts total).",
+        opt2Feat1: "70 full questions per set (200 pts max)",
+        opt2Feat2: "Multilingual audio transcripts & answer keys",
+        btnOpt2: "Open 50-Set Exam Bank",
+        catalogTitle: "50 Full TOPIK I Exam Sets",
+        catalogDesc: "Complete 70-question mock exams matching official TOPIK standards.",
+        btnHint: "💡 View Multilingual Hint & Explanation",
+        leadTitle: "Evaluation Completed!",
+        leadDesc: "Please enter your stay information to unlock your scores and <strong>E-7-4 visa report</strong>.",
+        lblName: "Full Name",
+        lblNat: "Nationality",
+        lblVisa: "Current Visa",
+        lblExpiry: "Visa Expiry Date",
+        lblPhone: "Phone / WhatsApp",
+        btnSubmit: "🔓 Unlock Detailed Score & Visa Report",
+        resHeaderTag: "hango Official Assessment Report",
+        resScoreTitle: "Total Estimated Score",
+        resVisaCalcTitle: "E-7-4 Bonus Point Assessment",
+        btnVocabDown: "Get Answer Explanation & Essential Vocab PDF",
+        btnConsultReq: "Book Free 1:1 Consultation with Visa Specialist",
+        footerDesc: "hango is a free Korean evaluation support service helping diligent foreign workers in Korea stably extend their visas and settle down."
+      }
+    };
+
+    // ------------------------------------------------------------------
+    // C. QUESTION TEMPLATES DATABASE (LISTENING & READING)
+    // ------------------------------------------------------------------
+    const sampleQuestions = [
+      // 1. Listening Q1
+      {
+        section: "listening",
+        category: "듣기 · 대화 알맞은 답 고르기",
+        instruction: { ko: "다음 회화를 듣고 빈칸에 들어갈 알맞은 말을 고르십시오.", vi: "Nghe đoạn hội thoại và chọn đáp án đúng.", en: "Listen to the dialogue and choose the correct response." },
+        audioScript: "남: 안녕하세요? 저는 찌엔입니다.\n여: 안녕하세요? 저는 수진이에요. 반가워요.",
+        context: "남: 안녕하세요? 저는 찌엔입니다.\n여: (                                             )",
+        options: {
+          ko: ["반가워요. 만나서 반갑습니다.", "안녕히 계세요.", "죄송합니다.", "괜찮습니다."],
+          vi: ["Rất vui được gặp bạn (반가워요).", "Tạm biệt người ở lại.", "Tôi xin lỗi.", "Không sao đâu."],
+          en: ["Nice to meet you (반가워요).", "Goodbye.", "I am sorry.", "It is okay."]
+        },
+        answer: 1,
+        hint: { ko: "처음 인사할 때는 '반가워요'가 적절합니다.", vi: "Khi chào hỏi lần đầu dùng '반가워요'.", en: "First time greeting uses '반가워요'." }
+      },
+      // 2. Listening Q2
+      {
+        section: "listening",
+        category: "듣기 · 작업장 장소 파악",
+        instruction: { ko: "다음 음성을 듣고 두 사람이 이야기하고 있는 장소를 고르십시오.", vi: "Nghe và chọn địa điểm hai người đang nói chuyện.", en: "Listen and choose the place where they are talking." },
+        audioScript: "여: 사장님, 오늘 용접 작업 준비 다 되었습니다.\n남: 수고했어요. 안전모와 장갑을 꼭 착용하고 시작하세요.",
+        context: "여: 사장님, 오늘 용접 작업 준비 다 되었습니다.\n남: 수고했어요. 안전모와 장갑을 꼭 착용하고 시작하세요.",
+        options: {
+          ko: ["작업장/공장", "식당", "은행", "공항"],
+          vi: ["Xưởng làm việc / Nhà máy (작업장)", "Nhà hàng (식당)", "Ngân hàng (은행)", "Sân bay (공항)"],
+          en: ["Workplace / Factory (작업장)", "Restaurant (식당)", "Bank (은행)", "Airport (공항)"]
+        },
+        answer: 1,
+        hint: { ko: "용접 작업과 안전모 이야기는 '작업장/공장'입니다.", vi: "Công việc hàn và mũ bảo hộ diễn ra tại 'xưởng làm việc'.", en: "Welding work and safety helmet refer to 'workplace'." }
+      },
+      // 3. Listening Q3
+      {
+        section: "listening",
+        category: "듣기 · 약속 및 행동 파악",
+        instruction: { ko: "다음 음성을 듣고 남자가 오늘 오후에 할 행동을 고르십시오.", vi: "Nghe và chọn hành động nam giới sẽ làm chiều nay.", en: "Listen and select what the man will do this afternoon." },
+        audioScript: "남: 마이 씨, 오늘 오후에 시간 있어요?\n여: 미안해요, 오후에는 한국어 수업이 있어요.\n남: 그래요? 그럼 혼자 출입국사무소에 다녀올게요.",
+        context: "남자는 오늘 오후에 무엇을 합니까?",
+        options: {
+          ko: ["출입국사무소 방문", "한국어 수업 들음", "기숙사 청소", "영화 관람"],
+          vi: ["Đến Cục xuất nhập cảnh (출입국사무소)", "Học lớp tiếng Hàn", "Dọn dẹp ký túc xá", "Xem phim"],
+          en: ["Visit Immigration Office (출입국사무소)", "Take Korean class", "Clean dormitory", "Watch movie"]
+        },
+        answer: 1,
+        hint: { ko: "남자가 '혼자 출입국사무소에 다녀올게요'라고 했습니다.", vi: "Người nam nói sẽ tự đi Cục xuất nhập cảnh.", en: "The man said he will go to the immigration office alone." }
+      },
+      // 4. Reading Q1
+      {
+        section: "reading",
+        category: "읽기 · 문법 (의무)",
+        instruction: { ko: "빈칸에 들어갈 가장 알맞은 것을 고르십시오.", vi: "Chọn từ thích hợp nhất điền vào chỗ trống.", en: "Choose the most appropriate word for the blank." },
+        audioScript: null,
+        context: "작업장에서는 안전을 위해 반드시 안전모를 (       ) 합니다.",
+        options: {
+          ko: ["써야", "쓰면", "쓰고", "쓰지만"],
+          vi: ["써야 (phải đội)", "쓰면 (nếu đội)", "쓰고 (đội và...)", "쓰지만 (đội nhưng...)"],
+          en: ["써야 (must wear)", "쓰면 (if wear)", "쓰고 (wear and)", "쓰지만 (wear but)"]
+        },
+        answer: 1,
+        hint: { ko: "필수 의무 사항은 '-어야/아야 하다'를 씁니다.", vi: "Biểu thị sự bắt buộc dùng '-어야/아야 하다'.", en: "Mandatory obligation uses '-어야/아야 하다'." }
+      },
+      // 5. Reading Q2
+      {
+        section: "reading",
+        category: "읽기 · 실용문 이해",
+        instruction: { ko: "다음 안내문을 보고 내용과 같은 것을 고르십시오.", vi: "Đọc thông báo sau và chọn nội dung đúng.", en: "Read the notice and select the matching statement." },
+        audioScript: null,
+        context: "[외국인등록증 분실 시 신고 안내]\n외국인등록증을 분실했을 때는 14일 이내에 출입국관리사무소에 방문하여 재발급을 신청해야 합니다.",
+        options: {
+          ko: [
+            "외국인등록증은 재발급이 불가능합니다.",
+            "분실 시 14일 이내에 재발급을 신청해야 합니다.",
+            "신고는 한 달 뒤에 해도 처벌받지 않습니다.",
+            "주민센터에서 즉시 새 카드를 만듭니다."
+          ],
+          vi: [
+            "Thẻ cư trú không thể cấp lại.",
+            "Khi mất phải xin cấp lại trong vòng 14 ngày.",
+            "Báo sau 1 tháng cũng không bị phạt.",
+            "Làm thẻ mới ngay tại phường xã."
+          ],
+          en: [
+            "ARC card cannot be reissued.",
+            "Must apply for reissuance within 14 days of loss.",
+            "Reporting after one month incurs no penalty.",
+            "Community center issues a new card immediately."
+          ]
+        },
+        answer: 2,
+        hint: { ko: "분실 후 14일 이내에 출입국에 신청해야 한다는 규정과 일치합니다.", vi: "Khớp quy định: xin cấp lại trong 14 ngày tại Cục xuất nhập cảnh.", en: "Matches rule: reapply within 14 days at immigration." }
+      }
+    ];
+
+    // ------------------------------------------------------------------
+    // D. APPLICATION INITIALIZATION & ROUTING
+    // ------------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Generate 50 Full Sets
+      generate50FullSets();
+
+      // 2. Load LocalStorage User if exists
+      const savedUser = localStorage.getItem('hango_user');
+      if (savedUser) {
+        try {
+          currentUser = JSON.parse(savedUser);
+          updateAuthButtonUI();
+        } catch (e) {}
+      }
+
+      // 3. Initial render
+      setGlobalLang('ko');
+    });
+
+    function generate50FullSets() {
+      generated50Sets = [];
+      for (let s = 1; s <= 50; s++) {
+        generated50Sets.push({
+          id: `full_set_${String(s).padStart(2, '0')}`,
+          number: s,
+          title: {
+            ko: `TOPIK I 실전 모의고사 제${s}회 (듣기 30 + 읽기 40)`,
+            vi: `Đề thi thử TOPIK I số ${s} (Nghe 30 + Đọc 40)`,
+            en: `TOPIK I Mock Exam #${s} (Listening 30 + Reading 40)`
+          },
+          difficulty: s <= 15 ? "기초~중급" : s <= 35 ? "표준 실전" : "심화 실전"
+        });
+      }
+    }
+
+    function navGo(viewName) {
+      stopAudio();
+
+      const views = ['landing', 'catalog', 'test', 'lead', 'result'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (el) el.classList.add('hidden');
+      });
+
+      const target = document.getElementById(`view-${viewName}`);
+      if (target) target.classList.remove('hidden');
+
+      // Update Nav Styling
+      ['home', 'sample', 'sets'].forEach(item => {
+        const navEl = document.getElementById(`nav-item-${item}`);
+        if (navEl) {
+          if ((item === 'home' && viewName === 'landing') || (item === 'sets' && viewName === 'catalog')) {
+            navEl.className = 'text-blue-600 font-bold transition whitespace-nowrap';
+          } else {
+            navEl.className = 'hover:text-slate-900 transition whitespace-nowrap';
+          }
+        }
+      });
+
+      if (viewName === 'catalog') renderCatalogCards(generated50Sets);
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ------------------------------------------------------------------
+    // E. REACTIVE i18n LANGUAGE SWITCHER
+    // ------------------------------------------------------------------
+    function setGlobalLang(lang) {
+      currentLang = lang;
+
+      ['ko', 'vi', 'en'].forEach(l => {
+        const btn = document.getElementById(`btn-lang-${l}`);
+        if (btn) {
+          btn.className = l === lang ? "px-2 py-1 rounded bg-white text-slate-900 font-bold shadow-xs" : "px-2 py-1 rounded text-slate-500 hover:text-slate-900";
+        }
+      });
+
+      const t = i18n[lang];
+
+      // Safe DOM Updates
+      const map = {
+        'nav-item-home': t.navHome,
+        'nav-item-sample': t.navSample,
+        'nav-item-sets': t.navSets,
+        'nav-item-guide': t.navGuide,
+        't-btn-login': currentUser ? `${currentUser.name} (${currentUser.visaType}) ⚙️` : t.btnLogin,
+        't-hero-tag': t.heroTag,
+        't-hero-headline': t.heroHeadline,
+        't-hero-subtitle': t.heroSubtitle,
+        't-opt1-title': t.opt1Title,
+        't-opt1-desc': t.opt1Desc,
+        't-opt1-feat1': t.opt1Feat1,
+        't-opt1-feat2': t.opt1Feat2,
+        't-btn-opt1': t.btnOpt1,
+        't-opt2-title': t.opt2Title,
+        't-opt2-desc': t.opt2Desc,
+        't-opt2-feat1': t.opt2Feat1,
+        't-opt2-feat2': t.opt2Feat2,
+        't-btn-opt2': t.btnOpt2,
+        't-catalog-title': t.catalogTitle,
+        't-catalog-desc': t.catalogDesc,
+        't-btn-hint': t.btnHint,
+        't-lead-title': t.leadTitle,
+        't-lead-desc': t.leadDesc,
+        't-lbl-name': t.lblName,
+        't-lbl-nat': t.lblNat,
+        't-lbl-visa': t.lblVisa,
+        't-lbl-expiry': t.lblExpiry,
+        't-lbl-phone': t.lblPhone,
+        't-btn-submit': t.btnSubmit,
+        't-res-header-tag': t.resHeaderTag,
+        't-res-score-title': t.resScoreTitle,
+        't-res-visa-calc-title': t.resVisaCalcTitle,
+        't-btn-vocab-down': `<span>📥</span><span>${t.btnVocabDown}</span>`,
+        't-btn-consult-req': `<span>⚖️</span><span>${t.btnConsultReq}</span>`,
+        't-footer-desc': t.footerDesc
+      };
+
+      for (let id in map) {
+        const el = document.getElementById(id);
+        if (el) {
+          if (id.startsWith('t-hero-') || id === 't-lead-desc' || id.startsWith('t-btn-')) {
+            el.innerHTML = map[id];
+          } else {
+            el.innerText = map[id];
+          }
+        }
+      }
+
+      if (!document.getElementById('view-test').classList.contains('hidden') && activeTest) {
+        renderCurrentQuestion();
+      }
+      if (!document.getElementById('view-catalog').classList.contains('hidden')) {
+        renderCatalogCards(generated50Sets);
+      }
+    }
+
+    // ------------------------------------------------------------------
+    // F. EXAM RUNNER & WEB SPEECH AUDIO SYNTHESIS
+    // ------------------------------------------------------------------
+    function startSampleTest() {
+      activeTest = {
+        mode: 'sample',
+        title: i18n[currentLang].opt1Title,
+        questions: sampleQuestions
+      };
+      activeIdx = 0;
+      activeAnswers = {};
+      navGo('test');
+      renderCurrentQuestion();
+    }
+
+    function renderCatalogCards(sets) {
+      const grid = document.getElementById('sets-catalog-grid');
+      if (!grid) return;
+      grid.innerHTML = sets.map(s => `
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-blue-500 hover:shadow-md transition flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700">SET ${s.number}</span>
+              <span class="text-[11px] font-semibold text-slate-400">${s.difficulty}</span>
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">${s.title[currentLang] || s.title.ko}</h4>
+            <div class="text-xs text-slate-500 flex items-center space-x-3">
+              <span>📝 70문항 (200점)</span>
+              <span>⏱ 100분 규격</span>
+            </div>
+          </div>
+          <button onclick="startFullSet('${s.id}')" class="w-full mt-4 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-xs transition">
+            모의고사 응시하기
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function filterCatalogSets() {
+      const q = document.getElementById('catalog-search-input').value.toLowerCase();
+      const filtered = generated50Sets.filter(s => String(s.number).includes(q) || s.difficulty.includes(q));
+      renderCatalogCards(filtered);
+    }
+
+    function startFullSet(setId) {
+      const setMeta = generated50Sets.find(s => s.id === setId);
+      activeTest = {
+        mode: 'full',
+        title: setMeta ? setMeta.title[currentLang] : "TOPIK I 정규 모의고사",
+        questions: sampleQuestions
+      };
+      activeIdx = 0;
+      activeAnswers = {};
+      navGo('test');
+      renderCurrentQuestion();
+    }
+
+    function renderCurrentQuestion() {
+      stopAudio();
+
+      if (!activeTest || !activeTest.questions[activeIdx]) return;
+      const q = activeTest.questions[activeIdx];
+      const total = activeTest.questions.length;
+      const progress = Math.round(((activeIdx + 1) / total) * 100);
+
+      document.getElementById('test-mode-label').innerText = activeTest.mode === 'sample' ? '약식 진단 테스트' : '정규 실전 모의고사';
+      document.getElementById('test-title-label').innerText = activeTest.title;
+      document.getElementById('q-counter').innerText = `QUESTION ${activeIdx + 1} / ${total}`;
+      document.getElementById('q-percent').innerText = `${progress}%`;
+      document.getElementById('q-progress-bar').style.width = `${progress}%`;
+
+      document.getElementById('q-category-tag').innerText = q.category;
+      document.getElementById('q-instruction').innerText = q.instruction[currentLang] || q.instruction.ko;
+      document.getElementById('q-context').innerText = q.context;
+      document.getElementById('q-hint-text').innerText = q.hint[currentLang] || q.hint.ko;
+      document.getElementById('q-hint-box').classList.add('hidden');
+
+      // Prev Question Button
+      const btnPrev = document.getElementById('btn-prev-q');
+      if (activeIdx > 0) btnPrev.classList.remove('hidden');
+      else btnPrev.classList.add('hidden');
+
+      // Listening Audio Player Box Visibility
+      const playerBox = document.getElementById('listening-player-box');
+      if (q.section === 'listening' && q.audioScript) {
+        playerBox.classList.remove('hidden');
+        document.getElementById('audio-script-box').innerText = q.audioScript;
+        document.getElementById('audio-script-box').classList.add('hidden');
+        document.getElementById('audio-status-text').innerText = "재생 버튼을 누르면 원어민 음성이 나옵니다.";
+      } else {
+        playerBox.classList.add('hidden');
+      }
+
+      // Render Options
+      const opts = q.options[currentLang] || q.options.ko;
+      const optsBox = document.getElementById('q-options');
+      optsBox.innerHTML = opts.map((text, idx) => {
+        const optNum = idx + 1;
+        const isSelected = activeAnswers[activeIdx] === optNum;
+        return `
+          <button onclick="pickOption(${optNum})" class="w-full text-left p-4 rounded-xl border text-sm font-medium transition flex items-center justify-between ${
+            isSelected
+              ? 'border-blue-600 bg-blue-50/60 text-blue-900 ring-2 ring-blue-600/20 font-bold'
+              : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800'
+          }">
+            <span>${optNum}. ${text}</span>
+            <span class="w-4 h-4 rounded-full border transition ${
+              isSelected ? 'border-blue-600 bg-blue-600' : 'border-slate-300'
+            }"></span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function pickOption(optNum) {
+      activeAnswers[activeIdx] = optNum;
+      if (activeIdx + 1 < activeTest.questions.length) {
+        activeIdx++;
+        renderCurrentQuestion();
+      } else {
+        navGo('lead');
+        if (currentUser) {
+          document.getElementById('lead-name').value = currentUser.name || '';
+          document.getElementById('lead-nat').value = currentUser.nationality || 'Vietnam';
+          document.getElementById('lead-visa').value = currentUser.visaType || 'E-9';
+          document.getElementById('lead-expiry').value = currentUser.visaExpiry || '';
+          document.getElementById('lead-phone').value = currentUser.phone || '';
+          document.getElementById('lead-email').value = currentUser.email || '';
+        }
+      }
+    }
+
+    function prevQuestion() {
+      if (activeIdx > 0) {
+        activeIdx--;
+        renderCurrentQuestion();
+      }
+    }
+
+    function skipQuestion() {
+      if (activeIdx + 1 < activeTest.questions.length) {
+        activeIdx++;
+        renderCurrentQuestion();
+      } else {
+        navGo('lead');
+      }
+    }
+
+    function toggleHintBox() {
+      document.getElementById('q-hint-box').classList.toggle('hidden');
+    }
+
+    // Audio Player Web Speech Synthesis Functions
+    function toggleAudioPlay() {
+      if (isPlayingAudio) {
+        stopAudio();
+      } else {
+        playAudio();
+      }
+    }
+
+    function playAudio() {
+      if (!('speechSynthesis' in window)) {
+        alert("이 브라우저는 음성 합성을 지원하지 않습니다.");
+        return;
+      }
+      stopAudio();
+
+      const q = activeTest.questions[activeIdx];
+      if (!q || !q.audioScript) return;
+
+      currentUtterance = new SpeechSynthesisUtterance(q.audioScript);
+      currentUtterance.lang = 'ko-KR';
+      currentUtterance.rate = audioSpeed;
+
+      currentUtterance.onstart = () => {
+        isPlayingAudio = true;
+        document.getElementById('btn-audio-play').innerText = '⏸';
+        document.getElementById('audio-status-text').innerText = "음성이 재생 중입니다...";
+      };
+
+      currentUtterance.onend = () => {
+        isPlayingAudio = false;
+        document.getElementById('btn-audio-play').innerText = '▶';
+        document.getElementById('audio-status-text').innerText = "재생이 완료되었습니다.";
+      };
+
+      window.speechSynthesis.speak(currentUtterance);
+    }
+
+    function stopAudio() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      isPlayingAudio = false;
+      const btn = document.getElementById('btn-audio-play');
+      if (btn) btn.innerText = '▶';
+      const status = document.getElementById('audio-status-text');
+      if (status) status.innerText = "재생 버튼을 누르면 음성이 나옵니다.";
+    }
+
+    function restartAudio() {
+      playAudio();
+    }
+
+    function toggleAudioSpeed() {
+      audioSpeed = audioSpeed === 1.0 ? 0.8 : 1.0;
+      document.getElementById('audio-speed-indicator').innerText = `배속: ${audioSpeed}x (${audioSpeed === 0.8 ? '느리게' : '표준'})`;
+      if (isPlayingAudio) playAudio();
+    }
+
+    function toggleAudioScript() {
+      document.getElementById('audio-script-box').classList.toggle('hidden');
+    }
+
+    // ------------------------------------------------------------------
+    // G. LEAD SUBMISSION & STORAGE
+    // ------------------------------------------------------------------
+    function submitLeadAndUnlockResult(e) {
+      e.preventDefault();
+
+      let correctListening = 0;
+      let correctReading = 0;
+
+      activeTest.questions.forEach((q, idx) => {
+        if (activeAnswers[idx] === q.answer) {
+          if (q.section === 'listening') correctListening++;
+          else correctReading++;
+        }
+      });
+
+      const totalQs = activeTest.questions.length;
+      const totalScore = Math.round(((correctListening + correctReading) / totalQs) * 100);
+      const listenScore = Math.round((correctListening / Math.max(1, activeTest.questions.filter(q => q.section === 'listening').length)) * 50);
+      const readScore = Math.round((correctReading / Math.max(1, activeTest.questions.filter(q => q.section === 'reading').length)) * 50);
+
+      const userProfile = {
+        name: document.getElementById('lead-name').value,
+        nationality: document.getElementById('lead-nat').value,
+        visaType: document.getElementById('lead-visa').value,
+        visaExpiry: document.getElementById('lead-expiry').value,
+        phone: document.getElementById('lead-phone').value,
+        email: document.getElementById('lead-email').value
+      };
+
+      const leadRecord = {
+        id: `lead_${Date.now()}`,
+        submittedAt: new Date().toISOString(),
+        testType: activeTest.mode,
+        score: totalScore,
+        listenScore,
+        readScore,
+        userProfile
+      };
+
+      // Save to localStorage for Admin Portal access
+      let savedLeads = [];
+      try {
+        savedLeads = JSON.parse(localStorage.getItem('hango_leads') || '[]');
+      } catch(err) {}
+      savedLeads.unshift(leadRecord);
+      localStorage.setItem('hango_leads', JSON.stringify(savedLeads));
+
+      // Render Unlocked Report Screen
+      document.getElementById('res-user-heading').innerText = `${userProfile.name} 회원님의 평가서`;
+      document.getElementById('res-badge-visa').innerText = `${userProfile.visaType} (${userProfile.nationality})`;
+      document.getElementById('res-badge-expiry').innerText = `만료: ${userProfile.visaExpiry || '미지정'}`;
+      document.getElementById('res-total-score').innerHTML = `${totalScore}<span class="text-base font-bold text-slate-400 ml-1">/ 100</span>`;
+      document.getElementById('res-listen-score').innerText = `${listenScore} / 50`;
+      document.getElementById('res-read-score').innerText = `${readScore} / 50`;
+
+      const passLabel = document.getElementById('res-pass-label');
+      const pointsCalc = document.getElementById('res-points-calc');
+      const visaSummary = document.getElementById('res-visa-summary-text');
+
+      if (totalScore >= 70) {
+        passLabel.innerText = "2급 합격 안정권 (E-7-4 가산점 대상)";
+        passLabel.className = "text-xs font-bold text-blue-800";
+        pointsCalc.innerText = "+10점 획득 가능";
+        pointsCalc.className = "text-blue-600 font-black text-sm";
+        visaSummary.innerText = "TOPIK 2급(또는 사회통합프로그램 2단계) 요건을 충분히 만족합니다. 지금부터 대표자 추천서 및 뿌리기업 가산점 서류 준비를 병행하십시오.";
+      } else if (totalScore >= 50) {
+        passLabel.innerText = "1급 수준 도달 (2급 합격을 위한 보강 필요)";
+        passLabel.className = "text-xs font-bold text-amber-800";
+        pointsCalc.innerText = "+5점 취득권 (2급 달성 시 10점)";
+        pointsCalc.className = "text-amber-600 font-black text-sm";
+        visaSummary.innerText = "일상 대화 듣기는 원활하나 어휘와 실용문 독해 영역에서 보강이 필요합니다. 무료 오답 어휘집을 신청하여 학습을 시작하세요.";
+      } else {
+        passLabel.innerText = "기초 단계 (기초 학습 필요)";
+        passLabel.className = "text-xs font-bold text-rose-800";
+        pointsCalc.innerText = "가산점 미달 (추가 학습 필요)";
+        pointsCalc.className = "text-rose-600 font-black text-sm";
+        visaSummary.innerText = "작업장 안전 표지판 및 기초 어휘를 우선 보강해야 합니다. 무료 단어장을 수령하여 기초를 굳히십시오.";
+      }
+
+      navGo('result');
+    }
+
+    function requestAction(type) {
+      const phone = document.getElementById('lead-phone').value || (currentUser ? currentUser.phone : '미입력');
+      const name = document.getElementById('lead-name').value || (currentUser ? currentUser.name : '회원');
+      const nat = document.getElementById('lead-nat').value || (currentUser ? currentUser.nationality : '기타');
+      const visa = document.getElementById('lead-visa').value || (currentUser ? currentUser.visaType : 'E-9');
+      const email = document.getElementById('lead-email').value || (currentUser ? currentUser.email : '');
+
+      const inqType = type === 'vocab' ? "어휘집 & 오답노트 PDF 수령" : "비자 1:1 상담 신청";
+
+      let savedInquiries = [];
+      try {
+        savedInquiries = JSON.parse(localStorage.getItem('hango_inquiries') || '[]');
+      } catch(err) {}
+
+      savedInquiries.unshift({
+        id: `inq_${Date.now()}`,
+        createdAt: new Date().toISOString(),
+        type: inqType,
+        name,
+        nationality: nat,
+        visaType: visa,
+        phone,
+        email,
+        status: "대기 중"
+      });
+
+      localStorage.setItem('hango_inquiries', JSON.stringify(savedInquiries));
+
+      if (type === 'vocab') {
+        alert(`[신청 완료] ${phone} 번호로 'TOPIK 2급 오답노트 및 필수 500 어휘집(PDF)' 다운로드 링크가 접수되었습니다.`);
+      } else {
+        alert(`[상담 예약 완료] ${phone} 번호로 출입국 전문 행정사 무료 1:1 상담이 예약되었습니다. 담당자가 연락드립니다.`);
+      }
+    }
+
+    function openVisaGuideInfo() {
+      openVisaGuideModal();
+    }
+
+    function openVisaGuideModal() {
+      const modal = document.getElementById('modal-visa-guide');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeVisaGuideModal() {
+      const modal = document.getElementById('modal-visa-guide');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // ------------------------------------------------------------------
+    // H. PROFILE MANAGEMENT & AUTHENTICATION
+    // ------------------------------------------------------------------
+    function openProfileEditModal() {
+      if (!currentUser) return openAuthModal('login');
+      document.getElementById('prof-edit-name').value = currentUser.name || '';
+      document.getElementById('prof-edit-nat').value = currentUser.nationality || 'Vietnam';
+      document.getElementById('prof-edit-visa').value = currentUser.visaType || 'E-9';
+      document.getElementById('prof-edit-expiry').value = currentUser.visaExpiry || '';
+      document.getElementById('prof-edit-phone').value = currentUser.phone || '';
+      document.getElementById('modal-profile-edit').classList.remove('hidden');
+    }
+
+    function closeProfileEditModal() {
+      document.getElementById('modal-profile-edit').classList.add('hidden');
+    }
+
+    function handleProfileUpdateSubmit(e) {
+      e.preventDefault();
+      currentUser = {
+        ...currentUser,
+        name: document.getElementById('prof-edit-name').value,
+        nationality: document.getElementById('prof-edit-nat').value,
+        visaType: document.getElementById('prof-edit-visa').value,
+        visaExpiry: document.getElementById('prof-edit-expiry').value,
+        phone: document.getElementById('prof-edit-phone').value
+      };
+      localStorage.setItem('hango_user', JSON.stringify(currentUser));
+      updateAuthButtonUI();
+      closeProfileEditModal();
+      alert("프로필 정보가 업데이트되었습니다.");
+    }
+
+    function openAuthModal(tab) {
+      document.getElementById('modal-auth').classList.remove('hidden');
+      setAuthTab(tab);
+    }
+
+    function closeAuthModal() {
+      document.getElementById('modal-auth').classList.add('hidden');
+    }
+
+    function setAuthTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('auth-login-form').classList.toggle('hidden', !isLogin);
+      document.getElementById('auth-register-form').classList.toggle('hidden', isLogin);
+      document.getElementById('tab-auth-login').className = isLogin ? "flex-1 py-2 text-blue-600 border-b-2 border-blue-600 font-bold" : "flex-1 py-2 text-slate-400 hover:text-slate-700 font-bold";
+      document.getElementById('tab-auth-register').className = !isLogin ? "flex-1 py-2 text-blue-600 border-b-2 border-blue-600 font-bold" : "flex-1 py-2 text-slate-400 hover:text-slate-700 font-bold";
+      document.getElementById('auth-modal-title').innerText = isLogin ? "로그인" : "회원가입";
+    }
+
+    function handleGoogleSocialLogin() {
+      currentUser = {
+        name: "NGUYEN VAN A",
+        email: "nguyen.google@gmail.com",
+        nationality: "Vietnam",
+        visaType: "E-9",
+        visaExpiry: "2027-06",
+        phone: "010-9876-5432",
+        createdAt: new Date().toISOString()
+      };
+      saveUserToUsersList(currentUser);
+      localStorage.setItem('hango_user', JSON.stringify(currentUser));
+      updateAuthButtonUI();
+      closeAuthModal();
+      alert("구글 계정으로 인증되었습니다!");
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      currentUser = {
+        name: "NGUYEN VAN A",
+        email: document.getElementById('login-email').value,
+        nationality: "Vietnam",
+        visaType: "E-9",
+        visaExpiry: "2027-06",
+        phone: "010-9876-5432",
+        createdAt: new Date().toISOString()
+      };
+      saveUserToUsersList(currentUser);
+      localStorage.setItem('hango_user', JSON.stringify(currentUser));
+      updateAuthButtonUI();
+      closeAuthModal();
+      alert(`${currentUser.name}님 환영합니다!`);
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      currentUser = {
+        name: document.getElementById('reg-name').value,
+        email: document.getElementById('reg-email').value,
+        nationality: "Vietnam",
+        visaType: "E-9",
+        phone: "010-0000-0000",
+        visaExpiry: "2027-12",
+        createdAt: new Date().toISOString()
+      };
+      saveUserToUsersList(currentUser);
+      localStorage.setItem('hango_user', JSON.stringify(currentUser));
+      updateAuthButtonUI();
+      closeAuthModal();
+      alert("회원가입이 완료되었습니다!");
+    }
+
+    function saveUserToUsersList(u) {
+      let users = [];
+      try {
+        users = JSON.parse(localStorage.getItem('hango_registered_users') || '[]');
+      } catch(e) {}
+      if (!users.some(existing => existing.email === u.email)) {
+        users.unshift(u);
+        localStorage.setItem('hango_registered_users', JSON.stringify(users));
+      }
+    }
+
+    function updateAuthButtonUI() {
+      const area = document.getElementById('auth-button-area');
+      if (!area) return;
+      if (currentUser) {
+        area.innerHTML = `
+          <button onclick="openProfileEditModal()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 transition flex items-center space-x-1">
+            <span>${currentUser.name} (${currentUser.visaType})</span>
+            <span class="text-slate-400">⚙️</span>
+          </button>
+        `;
+      } else {
+        area.innerHTML = `
+          <button onclick="openAuthModal('login')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 transition" id="t-btn-login">
+            ${i18n[currentLang].btnLogin}
+          </button>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
